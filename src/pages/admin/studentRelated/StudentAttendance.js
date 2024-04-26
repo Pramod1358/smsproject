@@ -16,9 +16,9 @@ import Popup from '../../../components/Popup';
 
 const StudentAttendance = ({ situation }) => {
     const dispatch = useDispatch();
-    const { currentUser, userDetails, loading } = useSelector((state) => state.user);
+    const { currentUser, userDetails, loading, currentRole } = useSelector((state) => state.user);
     const { subjectsList } = useSelector((state) => state.sclass);
-    const { response, error, statestatus } = useSelector((state) => state.student);
+    const { response, error, status: statestatus } = useSelector((state) => state.student);
     const params = useParams()
 
     const [studentID, setStudentID] = useState("");
@@ -43,13 +43,13 @@ const StudentAttendance = ({ situation }) => {
             dispatch(getUserDetails(studentID, "Student"));
             setChosenSubName(subjectID);
         }
-    }, [situation]);
+    }, [situation, params.id, params.studentID, params.subjectID, dispatch, currentRole, currentUser._id, currentUser.school._id]);
 
     useEffect(() => {
         if (userDetails && userDetails.sclassName && situation === "Student") {
             dispatch(getSubjectList(userDetails.sclassName._id, "ClassSubjects"));
         }
-    }, [dispatch, userDetails]);
+    }, [dispatch, userDetails, situation, currentRole, currentUser._id, currentUser.school._id]);
 
     const changeHandler = (event) => {
         const selectedSubject = subjectsList.find(

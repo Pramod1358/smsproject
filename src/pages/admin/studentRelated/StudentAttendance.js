@@ -83,7 +83,7 @@ const StudentAttendance = ({ situation }) => {
             setShowPopup(true)
             setMessage("Done Successfully")
         }
-    }, [response, statestatus, error])
+    }, [response, statestatus, error, dispatch, params]);
 
     return (
         <>
